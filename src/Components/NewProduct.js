@@ -9,6 +9,9 @@ function ShopForm()
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
 
+    const [quantityError, setQuantityError] = useState(null);
+    const [priceError, setPriceError] = useState(null);
+
     const handleSubmit = e =>
     {
         e.preventDefault();
@@ -27,16 +30,39 @@ function ShopForm()
                     <input type="text" name="description" id="description" placeholder="Enter description" onChange={e => setDescription(e.target.value)} />
                 </div>
                 <div><label htmlFor='category'> Category: </label>
-                    <input type="text" name="category" id="category" placeholder="Enter category" value={name} onChange={e => setCategory(e.target.value)} />
+                    <input type="text" name="category" id="category" placeholder="Enter category" value={category} onChange={e => setCategory(e.target.value)} />
                 </div>
-                <div><label htmlFor='quantity'> Quantity: </label>
-                    <input type="text" name="quantity" id="quantity" placeholder="Enter quantity" onChange={e => setQuantity(e.target.value)} />
+                {/* <div><label htmlFor='quantity'> Quantity: </label>
+                    <input type="text" name="quantity" id="quantity" placeholder="Enter quantity" value={quantity} onChange={e => setQuantity(e.target.value)} />
+                </div> */}
+
+                <div>
+                    <label htmlFor="quantity">Quantity: </label>
+                    <input type="text" name="quantity" placeholder="Enter quantity" onChange={e =>
+                    {
+                        const val = e.target.value.trim();
+                        setQuantity(val);
+                        isNaN(val) ? setQuantityError('Quantity must be a number.') : setQuantityError(null);
+                    }} />
+                    {quantityError && <div className='error'>{quantityError}</div>}
                 </div>
-                <div><label htmlFor='price'> Price: </label>
-                    <input type="text" name="price" id="price" placeholder="Enter price" value={name} onChange={e => setPrice(e.target.value)} />
+
+                <div>
+                    <label htmlFor="price">Price: </label>
+                    <input type="text" name="price" placeholder="Enter price" onChange={e =>
+                    {
+                        const val = e.target.value.trim();
+                        setPrice(val);
+                        isNaN(val) ? setPriceError('Price must be a number.') : setPriceError(null);
+                    }} />
+                    {priceError && <div className='error'>{priceError}</div>}
                 </div>
+
+                {/* <div><label htmlFor='price'> Price: </label>
+                    <input type="text" name="price" id="price" placeholder="Enter price" value={price} onChange={e => setPrice(e.target.value)} />
+                </div> */}
                 <br />
-                <input type="submit" value="SUBMIT" />
+                <input type="submit" disabled={priceError || quantityError} value="SUBMIT" />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="CANCEL" />
             </form>
