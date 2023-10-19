@@ -42,7 +42,7 @@ function ShopForm()
                     {
                         const val = e.target.value.trim();
                         setQuantity(val);
-                        isNaN(val) ? setQuantityError('Quantity must be a number.') : setQuantityError(null);
+                        !val.match(/^[-+]?[0-9]+$/) ? setQuantityError('Quantity must be an Integer number.') : setQuantityError(null);
                     }} />
                     {quantityError && <div className='error'>{quantityError}</div>}
                 </div>
